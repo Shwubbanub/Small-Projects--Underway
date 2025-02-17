@@ -1,0 +1,86 @@
+[gd_scene load_steps=11 format=3 uid="uid://c1wdvkjt3uukg"]
+
+[ext_resource type="Texture2D" uid="uid://cccsrv8bgpvml" path="res://Assets/Screens/Splash.png" id="1_ejw0j"]
+[ext_resource type="Script" path="res://Scripts/title_screen.gd" id="1_on4uj"]
+[ext_resource type="SpriteFrames" uid="uid://6dff1cdqjmjp" path="res://Spriteframes/Transitions.tres" id="3_c7nxm"]
+[ext_resource type="AudioStream" uid="uid://wloamcg2f1mv" path="res://Assets/Sounds/Bink.mp3" id="6_r1g2p"]
+[ext_resource type="AudioStream" uid="uid://bjjkxb5bkf15y" path="res://Assets/Sounds/Title.wav" id="7_oa5v3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p50pe"]
+atlas = ExtResource("1_ejw0j")
+region = Rect2(0, 0, 120, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jox3k"]
+atlas = ExtResource("1_ejw0j")
+region = Rect2(120, 0, 120, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jejwx"]
+atlas = ExtResource("1_ejw0j")
+region = Rect2(0, 120, 120, 120)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_480cx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p50pe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jox3k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jejwx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_sqav6"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("6_r1g2p")
+
+[node name="TitleScreen" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_on4uj")
+
+[node name="Screen" type="AnimatedSprite2D" parent="."]
+position = Vector2(60, 60)
+sprite_frames = SubResource("SpriteFrames_480cx")
+autoplay = "default"
+frame_progress = 0.785988
+
+[node name="Exit" type="Button" parent="."]
+offset_left = 91.0
+offset_top = 109.0
+offset_right = 120.0
+offset_bottom = 120.0
+
+[node name="Start" type="Button" parent="."]
+offset_left = 5.0
+offset_top = 75.0
+offset_right = 87.0
+offset_bottom = 125.0
+rotation = 0.261799
+
+[node name="Exit Transition" type="AnimatedSprite2D" parent="."]
+position = Vector2(60, 60)
+sprite_frames = ExtResource("3_c7nxm")
+animation = &"Stripe"
+
+[node name="Entrance Transition" type="AnimatedSprite2D" parent="."]
+position = Vector2(60, 60)
+sprite_frames = ExtResource("3_c7nxm")
+animation = &"Stripe"
+
+[node name="ButtonSound" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_sqav6")
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_oa5v3")
+autoplay = true
+
+[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]
+[connection signal="button_down" from="Start" to="." method="_on_start_button_down"]
+[connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
+[connection signal="animation_finished" from="Exit Transition" to="." method="_on_exit_transition_animation_finished"]

@@ -1,0 +1,78 @@
+[gd_scene load_steps=9 format=3 uid="uid://byofp321hhr1g"]
+
+[ext_resource type="Script" path="res://Scripts/splash.gd" id="1_2qo60"]
+[ext_resource type="Texture2D" uid="uid://clfdfn6ap42js" path="res://Assets/Screens/SFTS.png" id="1_4gvaf"]
+[ext_resource type="AudioStream" uid="uid://bwm1fxaxsmnjn" path="res://Assets/Sounds/Rain.wav" id="3_v1fcr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ljk5e"]
+atlas = ExtResource("1_4gvaf")
+region = Rect2(0, 0, 120, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mnj1f"]
+atlas = ExtResource("1_4gvaf")
+region = Rect2(120, 0, 120, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7lp1d"]
+atlas = ExtResource("1_4gvaf")
+region = Rect2(0, 120, 120, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_py50n"]
+atlas = ExtResource("1_4gvaf")
+region = Rect2(120, 120, 120, 120)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bwdg7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ljk5e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mnj1f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7lp1d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_py50n")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Splash" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_2qo60")
+
+[node name="SFTS" type="AnimatedSprite2D" parent="."]
+position = Vector2(60, 60)
+sprite_frames = SubResource("SpriteFrames_bwdg7")
+autoplay = "default"
+frame_progress = 0.895638
+
+[node name="OpacityTimer" type="Timer" parent="."]
+wait_time = 0.05
+
+[node name="FadeTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="FadingTimer" type="Timer" parent="."]
+wait_time = 0.05
+
+[node name="SwapTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="PreOpacityTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="Noise" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_v1fcr")
+autoplay = true
+
+[connection signal="timeout" from="OpacityTimer" to="." method="_on_opacity_timer_timeout"]
+[connection signal="timeout" from="FadeTimer" to="." method="_on_fade_timer_timeout"]
+[connection signal="timeout" from="FadingTimer" to="." method="_on_fading_timer_timeout"]
+[connection signal="timeout" from="SwapTimer" to="." method="_on_swap_timer_timeout"]
+[connection signal="timeout" from="PreOpacityTimer" to="." method="_on_pre_opacity_timer_timeout"]
