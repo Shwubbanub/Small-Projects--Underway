@@ -3,6 +3,6 @@ This is a small collection of small projects some mates and I am currently worki
 
 Currently included:
 
-**Seb**
+**Shwubbanub**
  - "LRLRLRGO", a low-res rythm game that duets the D-pad and keyboard. PRIORITY-HIGH
  - "OnceAponATime", a smallish text-based adventure/RPG that I plan to actually finish this time, featuring bespoke inputting and cool colours. PRIORITY-MEDIUM,HIGH
